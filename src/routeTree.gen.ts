@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as StreamsRouteImport } from './routes/streams'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StreamsIdRouteImport } from './routes/streams.$id'
 
+const SubjectsRoute = SubjectsRouteImport.update({
+  id: '/subjects',
+  path: '/subjects',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StreamsRoute = StreamsRouteImport.update({
   id: '/streams',
   path: '/streams',
@@ -32,34 +38,45 @@ const StreamsIdRoute = StreamsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/streams': typeof StreamsRouteWithChildren
+  '/subjects': typeof SubjectsRoute
   '/streams/$id': typeof StreamsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/streams': typeof StreamsRouteWithChildren
+  '/subjects': typeof SubjectsRoute
   '/streams/$id': typeof StreamsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/streams': typeof StreamsRouteWithChildren
+  '/subjects': typeof SubjectsRoute
   '/streams/$id': typeof StreamsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/streams' | '/streams/$id'
+  fullPaths: '/' | '/streams' | '/subjects' | '/streams/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/streams' | '/streams/$id'
-  id: '__root__' | '/' | '/streams' | '/streams/$id'
+  to: '/' | '/streams' | '/subjects' | '/streams/$id'
+  id: '__root__' | '/' | '/streams' | '/subjects' | '/streams/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   StreamsRoute: typeof StreamsRouteWithChildren
+  SubjectsRoute: typeof SubjectsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/subjects': {
+      id: '/subjects'
+      path: '/subjects'
+      fullPath: '/subjects'
+      preLoaderRoute: typeof SubjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/streams': {
       id: '/streams'
       path: '/streams'
@@ -98,6 +115,7 @@ const StreamsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   StreamsRoute: StreamsRouteWithChildren,
+  SubjectsRoute: SubjectsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

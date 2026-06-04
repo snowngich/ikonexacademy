@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as StudentsRouteImport } from './routes/students'
 import { Route as StreamsRouteImport } from './routes/streams'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScoresRouteImport } from './routes/scores'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ReportsRouteImport } from './routes/reports'
@@ -33,6 +34,11 @@ const StudentsRoute = StudentsRouteImport.update({
 const StreamsRoute = StreamsRouteImport.update({
   id: '/streams',
   path: '/streams',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScoresRoute = ScoresRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof ReportsRoute
   '/results': typeof ResultsRoute
   '/scores': typeof ScoresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/streams': typeof StreamsRouteWithChildren
   '/students': typeof StudentsRouteWithChildren
   '/subjects': typeof SubjectsRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/reports': typeof ReportsRoute
   '/results': typeof ResultsRoute
   '/scores': typeof ScoresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/streams': typeof StreamsRouteWithChildren
   '/students': typeof StudentsRouteWithChildren
   '/subjects': typeof SubjectsRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/reports': typeof ReportsRoute
   '/results': typeof ResultsRoute
   '/scores': typeof ScoresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/streams': typeof StreamsRouteWithChildren
   '/students': typeof StudentsRouteWithChildren
   '/subjects': typeof SubjectsRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/results'
     | '/scores'
+    | '/sitemap.xml'
     | '/streams'
     | '/students'
     | '/subjects'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/results'
     | '/scores'
+    | '/sitemap.xml'
     | '/streams'
     | '/students'
     | '/subjects'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/results'
     | '/scores'
+    | '/sitemap.xml'
     | '/streams'
     | '/students'
     | '/subjects'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   ReportsRoute: typeof ReportsRoute
   ResultsRoute: typeof ResultsRoute
   ScoresRoute: typeof ScoresRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StreamsRoute: typeof StreamsRouteWithChildren
   StudentsRoute: typeof StudentsRouteWithChildren
   SubjectsRoute: typeof SubjectsRoute
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       path: '/streams'
       fullPath: '/streams'
       preLoaderRoute: typeof StreamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/scores': {
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportsRoute: ReportsRoute,
   ResultsRoute: ResultsRoute,
   ScoresRoute: ScoresRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StreamsRoute: StreamsRouteWithChildren,
   StudentsRoute: StudentsRouteWithChildren,
   SubjectsRoute: SubjectsRoute,

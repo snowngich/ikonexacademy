@@ -14,7 +14,218 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      class_streams: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      grade_scales: {
+        Row: {
+          created_at: string
+          grade: string
+          id: string
+          max_score: number
+          min_score: number
+          points: number
+          remark: string | null
+        }
+        Insert: {
+          created_at?: string
+          grade: string
+          id?: string
+          max_score: number
+          min_score: number
+          points?: number
+          remark?: string | null
+        }
+        Update: {
+          created_at?: string
+          grade?: string
+          id?: string
+          max_score?: number
+          min_score?: number
+          points?: number
+          remark?: string | null
+        }
+        Relationships: []
+      }
+      scores: {
+        Row: {
+          ca_score: number
+          created_at: string
+          exam_score: number
+          id: string
+          student_id: string
+          subject_id: string
+          term: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          ca_score?: number
+          created_at?: string
+          exam_score?: number
+          id?: string
+          student_id: string
+          subject_id: string
+          term?: string
+          updated_at?: string
+          year?: number
+        }
+        Update: {
+          ca_score?: number
+          created_at?: string
+          exam_score?: number
+          id?: string
+          student_id?: string
+          subject_id?: string
+          term?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scores_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scores_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stream_subjects: {
+        Row: {
+          created_at: string
+          id: string
+          stream_id: string
+          subject_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          stream_id: string
+          subject_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          stream_id?: string
+          subject_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stream_subjects_stream_id_fkey"
+            columns: ["stream_id"]
+            isOneToOne: false
+            referencedRelation: "class_streams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_subjects_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      students: {
+        Row: {
+          admission_number: string
+          created_at: string
+          date_of_birth: string | null
+          first_name: string
+          gender: string | null
+          id: string
+          last_name: string
+          stream_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          admission_number: string
+          created_at?: string
+          date_of_birth?: string | null
+          first_name: string
+          gender?: string | null
+          id?: string
+          last_name: string
+          stream_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          admission_number?: string
+          created_at?: string
+          date_of_birth?: string | null
+          first_name?: string
+          gender?: string | null
+          id?: string
+          last_name?: string
+          stream_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_stream_id_fkey"
+            columns: ["stream_id"]
+            isOneToOne: false
+            referencedRelation: "class_streams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subjects: {
+        Row: {
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

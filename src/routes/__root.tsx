@@ -78,14 +78,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "IKOnex" },
+      { name: "description", content: "Ikonex Academy Hub is a web application for managing student data, class streams, subjects, and academic performance." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "IKOnex" },
+      { property: "og:description", content: "Ikonex Academy Hub is a web application for managing student data, class streams, subjects, and academic performance." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "IKOnex" },
+      { name: "twitter:description", content: "Ikonex Academy Hub is a web application for managing student data, class streams, subjects, and academic performance." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5edc872f-8a61-46fc-bf52-1ff9933129f9/id-preview-812f0ad4--df654218-44ed-4655-a853-eb43af5ba877.lovable.app-1780545519939.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5edc872f-8a61-46fc-bf52-1ff9933129f9/id-preview-812f0ad4--df654218-44ed-4655-a853-eb43af5ba877.lovable.app-1780545519939.png" },
     ],
     links: [
       {

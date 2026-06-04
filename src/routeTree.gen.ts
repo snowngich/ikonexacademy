@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StreamsRouteImport } from './routes/streams'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StreamsIdRouteImport } from './routes/streams.$id'
 
 const StreamsRoute = StreamsRouteImport.update({
   id: '/streams',
@@ -22,31 +23,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StreamsIdRoute = StreamsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => StreamsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/streams': typeof StreamsRoute
+  '/streams': typeof StreamsRouteWithChildren
+  '/streams/$id': typeof StreamsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/streams': typeof StreamsRoute
+  '/streams': typeof StreamsRouteWithChildren
+  '/streams/$id': typeof StreamsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/streams': typeof StreamsRoute
+  '/streams': typeof StreamsRouteWithChildren
+  '/streams/$id': typeof StreamsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/streams'
+  fullPaths: '/' | '/streams' | '/streams/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/streams'
-  id: '__root__' | '/' | '/streams'
+  to: '/' | '/streams' | '/streams/$id'
+  id: '__root__' | '/' | '/streams' | '/streams/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  StreamsRoute: typeof StreamsRoute
+  StreamsRoute: typeof StreamsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +74,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/streams/$id': {
+      id: '/streams/$id'
+      path: '/$id'
+      fullPath: '/streams/$id'
+      preLoaderRoute: typeof StreamsIdRouteImport
+      parentRoute: typeof StreamsRoute
+    }
   }
 }
 
+interface StreamsRouteChildren {
+  StreamsIdRoute: typeof StreamsIdRoute
+}
+
+const StreamsRouteChildren: StreamsRouteChildren = {
+  StreamsIdRoute: StreamsIdRoute,
+}
+
+const StreamsRouteWithChildren =
+  StreamsRoute._addFileChildren(StreamsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  StreamsRoute: StreamsRoute,
+  StreamsRoute: StreamsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

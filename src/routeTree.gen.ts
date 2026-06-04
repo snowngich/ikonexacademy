@@ -9,38 +9,226 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SubjectsRouteImport } from './routes/subjects'
+import { Route as StudentsRouteImport } from './routes/students'
+import { Route as StreamsRouteImport } from './routes/streams'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ScoresRouteImport } from './routes/scores'
+import { Route as ResultsRouteImport } from './routes/results'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as GradingRouteImport } from './routes/grading'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StudentsIdRouteImport } from './routes/students.$id'
+import { Route as StreamsIdRouteImport } from './routes/streams.$id'
 
+const SubjectsRoute = SubjectsRouteImport.update({
+  id: '/subjects',
+  path: '/subjects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentsRoute = StudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StreamsRoute = StreamsRouteImport.update({
+  id: '/streams',
+  path: '/streams',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScoresRoute = ScoresRouteImport.update({
+  id: '/scores',
+  path: '/scores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultsRoute = ResultsRouteImport.update({
+  id: '/results',
+  path: '/results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GradingRoute = GradingRouteImport.update({
+  id: '/grading',
+  path: '/grading',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentsIdRoute = StudentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => StudentsRoute,
+} as any)
+const StreamsIdRoute = StreamsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => StreamsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/grading': typeof GradingRoute
+  '/reports': typeof ReportsRoute
+  '/results': typeof ResultsRoute
+  '/scores': typeof ScoresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/streams': typeof StreamsRouteWithChildren
+  '/students': typeof StudentsRouteWithChildren
+  '/subjects': typeof SubjectsRoute
+  '/streams/$id': typeof StreamsIdRoute
+  '/students/$id': typeof StudentsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/grading': typeof GradingRoute
+  '/reports': typeof ReportsRoute
+  '/results': typeof ResultsRoute
+  '/scores': typeof ScoresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/streams': typeof StreamsRouteWithChildren
+  '/students': typeof StudentsRouteWithChildren
+  '/subjects': typeof SubjectsRoute
+  '/streams/$id': typeof StreamsIdRoute
+  '/students/$id': typeof StudentsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/grading': typeof GradingRoute
+  '/reports': typeof ReportsRoute
+  '/results': typeof ResultsRoute
+  '/scores': typeof ScoresRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/streams': typeof StreamsRouteWithChildren
+  '/students': typeof StudentsRouteWithChildren
+  '/subjects': typeof SubjectsRoute
+  '/streams/$id': typeof StreamsIdRoute
+  '/students/$id': typeof StudentsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/grading'
+    | '/reports'
+    | '/results'
+    | '/scores'
+    | '/sitemap.xml'
+    | '/streams'
+    | '/students'
+    | '/subjects'
+    | '/streams/$id'
+    | '/students/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/grading'
+    | '/reports'
+    | '/results'
+    | '/scores'
+    | '/sitemap.xml'
+    | '/streams'
+    | '/students'
+    | '/subjects'
+    | '/streams/$id'
+    | '/students/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/grading'
+    | '/reports'
+    | '/results'
+    | '/scores'
+    | '/sitemap.xml'
+    | '/streams'
+    | '/students'
+    | '/subjects'
+    | '/streams/$id'
+    | '/students/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GradingRoute: typeof GradingRoute
+  ReportsRoute: typeof ReportsRoute
+  ResultsRoute: typeof ResultsRoute
+  ScoresRoute: typeof ScoresRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StreamsRoute: typeof StreamsRouteWithChildren
+  StudentsRoute: typeof StudentsRouteWithChildren
+  SubjectsRoute: typeof SubjectsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/subjects': {
+      id: '/subjects'
+      path: '/subjects'
+      fullPath: '/subjects'
+      preLoaderRoute: typeof SubjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/students': {
+      id: '/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof StudentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/streams': {
+      id: '/streams'
+      path: '/streams'
+      fullPath: '/streams'
+      preLoaderRoute: typeof StreamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scores': {
+      id: '/scores'
+      path: '/scores'
+      fullPath: '/scores'
+      preLoaderRoute: typeof ScoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/results': {
+      id: '/results'
+      path: '/results'
+      fullPath: '/results'
+      preLoaderRoute: typeof ResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grading': {
+      id: '/grading'
+      path: '/grading'
+      fullPath: '/grading'
+      preLoaderRoute: typeof GradingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +236,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/students/$id': {
+      id: '/students/$id'
+      path: '/$id'
+      fullPath: '/students/$id'
+      preLoaderRoute: typeof StudentsIdRouteImport
+      parentRoute: typeof StudentsRoute
+    }
+    '/streams/$id': {
+      id: '/streams/$id'
+      path: '/$id'
+      fullPath: '/streams/$id'
+      preLoaderRoute: typeof StreamsIdRouteImport
+      parentRoute: typeof StreamsRoute
+    }
   }
 }
 
+interface StreamsRouteChildren {
+  StreamsIdRoute: typeof StreamsIdRoute
+}
+
+const StreamsRouteChildren: StreamsRouteChildren = {
+  StreamsIdRoute: StreamsIdRoute,
+}
+
+const StreamsRouteWithChildren =
+  StreamsRoute._addFileChildren(StreamsRouteChildren)
+
+interface StudentsRouteChildren {
+  StudentsIdRoute: typeof StudentsIdRoute
+}
+
+const StudentsRouteChildren: StudentsRouteChildren = {
+  StudentsIdRoute: StudentsIdRoute,
+}
+
+const StudentsRouteWithChildren = StudentsRoute._addFileChildren(
+  StudentsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GradingRoute: GradingRoute,
+  ReportsRoute: ReportsRoute,
+  ResultsRoute: ResultsRoute,
+  ScoresRoute: ScoresRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StreamsRoute: StreamsRouteWithChildren,
+  StudentsRoute: StudentsRouteWithChildren,
+  SubjectsRoute: SubjectsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

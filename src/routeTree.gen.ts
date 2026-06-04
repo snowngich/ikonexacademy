@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as StudentsRouteImport } from './routes/students'
 import { Route as StreamsRouteImport } from './routes/streams'
+import { Route as ScoresRouteImport } from './routes/scores'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentsIdRouteImport } from './routes/students.$id'
 import { Route as StreamsIdRouteImport } from './routes/streams.$id'
@@ -29,6 +30,11 @@ const StudentsRoute = StudentsRouteImport.update({
 const StreamsRoute = StreamsRouteImport.update({
   id: '/streams',
   path: '/streams',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScoresRoute = ScoresRouteImport.update({
+  id: '/scores',
+  path: '/scores',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -49,6 +55,7 @@ const StreamsIdRoute = StreamsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/scores': typeof ScoresRoute
   '/streams': typeof StreamsRouteWithChildren
   '/students': typeof StudentsRouteWithChildren
   '/subjects': typeof SubjectsRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/scores': typeof ScoresRoute
   '/streams': typeof StreamsRouteWithChildren
   '/students': typeof StudentsRouteWithChildren
   '/subjects': typeof SubjectsRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/scores': typeof ScoresRoute
   '/streams': typeof StreamsRouteWithChildren
   '/students': typeof StudentsRouteWithChildren
   '/subjects': typeof SubjectsRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/scores'
     | '/streams'
     | '/students'
     | '/subjects'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/scores'
     | '/streams'
     | '/students'
     | '/subjects'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/scores'
     | '/streams'
     | '/students'
     | '/subjects'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ScoresRoute: typeof ScoresRoute
   StreamsRoute: typeof StreamsRouteWithChildren
   StudentsRoute: typeof StudentsRouteWithChildren
   SubjectsRoute: typeof SubjectsRoute
@@ -127,6 +140,13 @@ declare module '@tanstack/react-router' {
       path: '/streams'
       fullPath: '/streams'
       preLoaderRoute: typeof StreamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scores': {
+      id: '/scores'
+      path: '/scores'
+      fullPath: '/scores'
+      preLoaderRoute: typeof ScoresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -178,6 +198,7 @@ const StudentsRouteWithChildren = StudentsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ScoresRoute: ScoresRoute,
   StreamsRoute: StreamsRouteWithChildren,
   StudentsRoute: StudentsRouteWithChildren,
   SubjectsRoute: SubjectsRoute,

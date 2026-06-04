@@ -15,6 +15,7 @@ import { Route as StreamsRouteImport } from './routes/streams'
 import { Route as ScoresRouteImport } from './routes/scores'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as GradingRouteImport } from './routes/grading'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentsIdRouteImport } from './routes/students.$id'
 import { Route as StreamsIdRouteImport } from './routes/streams.$id'
@@ -49,6 +50,11 @@ const ReportsRoute = ReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GradingRoute = GradingRouteImport.update({
+  id: '/grading',
+  path: '/grading',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,6 +73,7 @@ const StreamsIdRoute = StreamsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/grading': typeof GradingRoute
   '/reports': typeof ReportsRoute
   '/results': typeof ResultsRoute
   '/scores': typeof ScoresRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/grading': typeof GradingRoute
   '/reports': typeof ReportsRoute
   '/results': typeof ResultsRoute
   '/scores': typeof ScoresRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/grading': typeof GradingRoute
   '/reports': typeof ReportsRoute
   '/results': typeof ResultsRoute
   '/scores': typeof ScoresRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/grading'
     | '/reports'
     | '/results'
     | '/scores'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/grading'
     | '/reports'
     | '/results'
     | '/scores'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/grading'
     | '/reports'
     | '/results'
     | '/scores'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GradingRoute: typeof GradingRoute
   ReportsRoute: typeof ReportsRoute
   ResultsRoute: typeof ResultsRoute
   ScoresRoute: typeof ScoresRoute
@@ -189,6 +202,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grading': {
+      id: '/grading'
+      path: '/grading'
+      fullPath: '/grading'
+      preLoaderRoute: typeof GradingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -238,6 +258,7 @@ const StudentsRouteWithChildren = StudentsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GradingRoute: GradingRoute,
   ReportsRoute: ReportsRoute,
   ResultsRoute: ResultsRoute,
   ScoresRoute: ScoresRoute,

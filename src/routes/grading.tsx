@@ -22,6 +22,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -74,6 +75,9 @@ function GradeForm({ existing, onClose }: { existing?: GradeScale; onClose: () =
     <DialogContent>
       <DialogHeader>
         <DialogTitle>{existing ? "Edit grade band" : "New grade band"}</DialogTitle>
+        <DialogDescription>
+          Configure the mark range, grade label, points and report-card remark.
+        </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-2 sm:grid-cols-2">
         <div className="space-y-2">
@@ -188,6 +192,10 @@ function GradingPage() {
           </Table>
         </Card>
       )}
+
+      <Dialog open={!!editing} onOpenChange={(open) => !open && setEditing(null)}>
+        {editing && <GradeForm existing={editing} onClose={() => setEditing(null)} />}
+      </Dialog>
     </AppShell>
   );
 }

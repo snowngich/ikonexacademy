@@ -22,8 +22,10 @@ import { useGradeScales, useScores, useStudent } from "@/lib/queries";
 import { computeStudentResults } from "@/lib/grading";
 import { generateReportCard } from "@/lib/pdf";
 
-export const Route = createFileRoute("/students/$id"head: () => ({ meta: [{ title: "Student Details — Ikonex Academy" }] }),
-  )({
+export const Route = createFileRoute("/students/$id")({
+  head: () => ({
+    meta: [{ title: "Student Details — Ikonex Academy" }],
+  }),
   component: StudentDetailPage,
 });
 
@@ -111,7 +113,7 @@ function StudentDetailPage() {
 
       <Card className="overflow-hidden">
         <div className="border-b border-border px-5 py-4">
-          <h2 className="font-semibold">Performance by subject — {term} {year}</h2>
+          <h2 className="font-semibold">Performance by subject — ${term} ${year}</h2>
         </div>
         {!hasScores ? (
           <p className="py-10 text-center text-sm text-muted-foreground">

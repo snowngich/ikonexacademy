@@ -24,8 +24,10 @@ import {
   useSetStreamSubjects,
 } from "@/lib/queries";
 
-export const Route = createFileRoute("/streams/$id"head: () => ({ meta: [{ title: "Stream Details — Ikonex Academy" }] }),
-  )({
+export const Route = createFileRoute("/streams/$id")({
+  head: () => ({
+    meta: [{ title: "Stream Details — Ikonex Academy" }],
+  }),
   component: StreamDetailPage,
 });
 

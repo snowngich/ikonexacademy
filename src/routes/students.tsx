@@ -28,6 +28,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -88,6 +89,9 @@ function StudentForm({ existing, onClose }: { existing?: StudentWithStream; onCl
     <DialogContent>
       <DialogHeader>
         <DialogTitle>{existing ? "Edit student" : "Register student"}</DialogTitle>
+        <DialogDescription>
+          Capture the learner details and assign the student to a class stream.
+        </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-2 sm:grid-cols-2">
         <div className="space-y-2">

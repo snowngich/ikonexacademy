@@ -62,21 +62,25 @@ function StudentDetailPage() {
   const result = resultsMap.get(id);
   const hasScores = (result?.subjectCount ?? 0) > 0;
 
-  const downloadReport = () => {
+  const downloadReport = async () => {
     if (!result || !hasScores) {
       toast.error("No scores recorded for this term/year");
       return;
     }
-    generateReportCard({
-      studentName: `${student.first_name} ${student.last_name}`,
-      admissionNumber: student.admission_number,
-      streamName: student.class_streams?.name ?? "Unassigned",
-      term,
-      year,
-      result,
-      scales: scales ?? [],
-    });
-    toast.success("Report card downloaded");
+    try {
+      await generateReportCard({
+        studentName: `${student.first_name} ${student.last_name}`,
+        admissionNumber: student.admission_number,
+        streamName: student.class_streams?.name ?? "Unassigned",
+        term,
+        year,
+        result,
+        scales: scales ?? [],
+      });
+      toast.success("Report card downloaded");
+    } catch (e) {
+      toast.error((e as Error).message);
+    }
   };
 
   return (

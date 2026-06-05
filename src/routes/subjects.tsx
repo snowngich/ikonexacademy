@@ -22,6 +22,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -72,6 +73,9 @@ function SubjectForm({ existing, onClose }: { existing?: Subject; onClose: () =>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>{existing ? "Edit subject" : "New subject"}</DialogTitle>
+        <DialogDescription>
+          Enter the subject name, short code and optional curriculum notes.
+        </DialogDescription>
       </DialogHeader>
       <div className="space-y-4 py-2">
         <div className="grid grid-cols-3 gap-3">

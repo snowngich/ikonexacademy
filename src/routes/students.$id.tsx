@@ -22,7 +22,8 @@ import { useGradeScales, useScores, useStudent } from "@/lib/queries";
 import { computeStudentResults } from "@/lib/grading";
 import { generateReportCard } from "@/lib/pdf";
 
-export const Route = createFileRoute("/students/$id")({
+export const Route = createFileRoute("/students/$id"head: () => ({ meta: [{ title: "Student Details — Ikonex Academy" }] }),
+  )({
   component: StudentDetailPage,
 });
 

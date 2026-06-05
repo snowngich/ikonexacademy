@@ -98,46 +98,50 @@ function ReportsPage() {
   };
 
   const downloadClassReport = async () => {
-    if (subjectId === "all") {
-      const rows = studentsWithScores
-        .map((s) => ({ s, r: resultsMap.get(s.id)! }))
-        .sort((a, b) => (a.r.position ?? 0) - (b.r.position ?? 0))
-        .map(({ s, r }) => ({
-          rank: r.position ?? "-",
-          admission: s.admission_number,
-          name: `${s.first_name} ${s.last_name}`,
-          total: r.total.toFixed(1),
-          average: `${r.average.toFixed(2)}%`,
-          grade: r.grade,
-        }));
-      if (rows.length === 0) return toast.error("No results to report");
-      await generateClassReport({ streamName, term, year, rows, includeAverage: true });
-    } else {
-      const subjName = streamSubjects?.find((x) => x.subject_id === subjectId)?.subjects.name ?? "";
-      const rows = (scores ?? [])
-        .filter((sc) => sc.subject_id === subjectId)
-        .map((sc) => {
-          const st = students?.find((x) => x.id === sc.student_id);
-          const total = scoreTotal(sc);
-          return {
-            total,
-            admission: st?.admission_number ?? "",
-            name: st ? `${st.first_name} ${st.last_name}` : "Unknown",
-            grade: resolveGrade(total, scales ?? []).grade,
-          };
-        })
-        .sort((a, b) => b.total - a.total)
-        .map((r, i) => ({
-          rank: i + 1,
-          admission: r.admission,
-          name: r.name,
-          total: r.total.toFixed(1),
-          grade: r.grade,
-        }));
-      if (rows.length === 0) return toast.error("No scores for this subject");
-      await generateClassReport({ streamName, subjectName: subjName, term, year, rows, includeAverage: false });
+    try {
+      if (subjectId === "all") {
+        const rows = studentsWithScores
+          .map((s) => ({ s, r: resultsMap.get(s.id)! }))
+          .sort((a, b) => (a.r.position ?? 0) - (b.r.position ?? 0))
+          .map(({ s, r }) => ({
+            rank: r.position ?? "-",
+            admission: s.admission_number,
+            name: `${s.first_name} ${s.last_name}`,
+            total: r.total.toFixed(1),
+            average: `${r.average.toFixed(2)}%`,
+            grade: r.grade,
+          }));
+        if (rows.length === 0) return toast.error("No results to report");
+        await generateClassReport({ streamName, term, year, rows, includeAverage: true });
+      } else {
+        const subjName = streamSubjects?.find((x) => x.subject_id === subjectId)?.subjects.name ?? "";
+        const rows = (scores ?? [])
+          .filter((sc) => sc.subject_id === subjectId)
+          .map((sc) => {
+            const st = students?.find((x) => x.id === sc.student_id);
+            const total = scoreTotal(sc);
+            return {
+              total,
+              admission: st?.admission_number ?? "",
+              name: st ? `${st.first_name} ${st.last_name}` : "Unknown",
+              grade: resolveGrade(total, scales ?? []).grade,
+            };
+          })
+          .sort((a, b) => b.total - a.total)
+          .map((r, i) => ({
+            rank: i + 1,
+            admission: r.admission,
+            name: r.name,
+            total: r.total.toFixed(1),
+            grade: r.grade,
+          }));
+        if (rows.length === 0) return toast.error("No scores for this subject");
+        await generateClassReport({ streamName, subjectName: subjName, term, year, rows, includeAverage: false });
+      }
+      toast.success("Class report generated");
+    } catch (e) {
+      toast.error((e as Error).message);
     }
-    toast.success("Class report generated");
   };
 
   return (

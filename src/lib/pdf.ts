@@ -1,11 +1,15 @@
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
 import type { GradeScale } from "./types";
 import type { StudentResult } from "./grading";
 
 const PRIMARY: [number, number, number] = [54, 65, 168];
 
-function header(doc: jsPDF, subtitle: string) {
+async function getJsPDF() {
+  const { jsPDF } = await import("jspdf");
+  const { default: autoTable } = await import("jspdf-autotable");
+  return { jsPDF, autoTable };
+}
+
+function header(doc: any, subtitle: string) {
   doc.setFillColor(...PRIMARY);
   doc.rect(0, 0, 210, 30, "F");
   doc.setTextColor(255, 255, 255);
@@ -20,7 +24,7 @@ function header(doc: jsPDF, subtitle: string) {
   doc.setTextColor(20, 20, 20);
 }
 
-export function generateReportCard(opts: {
+export async function generateReportCard(opts: {
   studentName: string;
   admissionNumber: string;
   streamName: string;
@@ -29,6 +33,8 @@ export function generateReportCard(opts: {
   result: StudentResult;
   scales: GradeScale[];
 }) {
+  if (typeof window === "undefined") return;
+  const { jsPDF, autoTable } = await getJsPDF();
   const doc = new jsPDF();
   header(doc, "Student Report Card");
 
@@ -64,7 +70,6 @@ export function generateReportCard(opts: {
     styles: { fontSize: 9, cellPadding: 2.5 },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const afterTable = (doc as any).lastAutoTable.finalY + 10;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
@@ -79,7 +84,6 @@ export function generateReportCard(opts: {
   doc.setFont("helvetica", "normal");
   doc.text(`Remark: ${opts.result.remark}`, 80, afterTable + 7);
 
-  // Grading key
   autoTable(doc, {
     startY: afterTable + 16,
     head: [["Grade", "Range", "Remark"]],
@@ -96,7 +100,7 @@ export function generateReportCard(opts: {
   doc.save(`ReportCard_${opts.admissionNumber}_${opts.term}_${opts.year}.pdf`);
 }
 
-export function generateClassReport(opts: {
+export async function generateClassReport(opts: {
   streamName: string;
   subjectName?: string;
   term: string;
@@ -111,6 +115,8 @@ export function generateClassReport(opts: {
   }>;
   includeAverage: boolean;
 }) {
+  if (typeof window === "undefined") return;
+  const { jsPDF, autoTable } = await getJsPDF();
   const doc = new jsPDF();
   header(doc, "Class Performance Report");
 

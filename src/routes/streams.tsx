@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -55,6 +56,9 @@ function StreamForm({ existing, onClose }: { existing?: ClassStream; onClose: ()
     <DialogContent>
       <DialogHeader>
         <DialogTitle>{existing ? "Edit class stream" : "New class stream"}</DialogTitle>
+        <DialogDescription>
+          Add or update a class stream such as Form 1A, Form 1B or Form 1C.
+        </DialogDescription>
       </DialogHeader>
       <div className="space-y-4 py-2">
         <div className="space-y-2">
